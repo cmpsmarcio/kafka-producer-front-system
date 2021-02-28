@@ -3,13 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "npm run build:css && next dev",
+    "build": "npm run build:css && next build",
+    "start": "npm run build:css && next start",
+    "build:css": "postcss ./src/styles/tailwind.css -o ./src/styles/main.css"
   },
   "dependencies": {
+    "autoprefixer": "^10.2.4",
     "next": "10.0.7",
+    "postcss-cli": "^8.3.1",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "tailwind-react-ui": "^0.8.1",
+    "tailwindcss": "^2.0.3"
   }
 }
