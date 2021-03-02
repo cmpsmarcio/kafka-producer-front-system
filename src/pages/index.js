@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Form from '../components/form.js'
+import Main from '../components/Main.js'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
         <title>Trabalho final - 38SCJ</title>
       </Head>
       <main className={styles.main}>
-        <Form />
+        <Main />
       </main>
       <footer className={styles.footer}>
        <label>Grupo 2</label>
