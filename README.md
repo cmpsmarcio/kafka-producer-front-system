@@ -1,5 +1,7 @@
 # Simulação de mapeamento de um Drone
 
+<img alt="License" title="#License" src="https://img.shields.io/github/license/cmpsmarcio/kafka-producer-front-system" />
+
 ## Descrição
 <p>
 Coleta os dados de temperatura e umidade que são capturadas por drones.
