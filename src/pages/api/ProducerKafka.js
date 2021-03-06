@@ -1,25 +1,24 @@
-import { Kafka } from 'kafka-node'
+import { Kafka } from 'kafkajs'
+import dotenv from 'dotenv'
+dotenv.config()
 
-const topic = (process.env.TOPICO_KAFKA || 'mapeamento-drone')
-const brokers = (process.env.BROKERS_KAFKA || '').split(',')
-const clientId = (process.env.APP_CODE || 'drone')
-
+const topic = process.env.TOPICO_KAFKA
+const broker = process.env.BROKERS_KAFKA
+const clientId = process.env.CLIENTE_KAFKA
 export default class ProducerKafka {
-  constructor(drone) {
-    this.drone = drone
-
+  constructor() {
     const kafka = new Kafka({
-      clientId,
-      brokers,
+      clientId: clientId,
+      brokers: [broker],
     })
     this.KafkaProducer = kafka.producer()
   }
 
-  async enviar () {
+  async enviar (mensagem) {
     await this.KafkaProducer.connect()
     await this.KafkaProducer.send({
       topic,
-      messages: JSON.stringify(this.drone),
+      messages: [{value: JSON.stringify(mensagem)}],
     })
     await this.KafkaProducer.disconnect()
   }

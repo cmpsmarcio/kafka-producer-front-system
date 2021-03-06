@@ -12,6 +12,14 @@ export default class Form extends Component {
     }
     
     this.handleChanged = this.handleChanged.bind(this);
+    this.monitoring()
+  }
+
+  monitoring() {
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      this.sendKafka(this.state)
+    }, 10000);
   }
 
   sendKafka(value) {
@@ -31,11 +39,7 @@ export default class Form extends Component {
       ...this.state,
       [event.target.id]: event.target.value,
     });
-
-    clearInterval(this.interval);
-    this.interval = setInterval(() => {
-      this.sendKafka(this.state)
-    }, 10000);
+    this.monitoring()
   }
 
   render() {

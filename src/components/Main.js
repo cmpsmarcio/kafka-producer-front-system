@@ -27,8 +27,8 @@ export default class Main extends Component {
         idDrone={uuid.v4()} 
         latitude={-23.54982304015043}
         longitude={-46.634168716398555}
-        temperature={25}
-        humidity={80}
+        temperature={23}
+        humidity={60}
         rastreability={false} 
       />)
     }
