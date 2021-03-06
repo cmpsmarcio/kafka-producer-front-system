@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import moment from 'moment'
 export default class Form extends Component {
   constructor(props) {
     super(props);
@@ -22,11 +23,16 @@ export default class Form extends Component {
     }, 10000);
   }
 
-  sendKafka(value) {
+  sendKafka({idDrone, temperature, humidity}) {
    fetch('http://localhost:3000/api/kafka ', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(value)
+      body: JSON.stringify({
+        date: moment().format(),
+        idDrone,
+        temperature,
+        humidity
+      })
     }).then(data => data.json())
   }
 

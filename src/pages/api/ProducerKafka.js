@@ -5,6 +5,7 @@ dotenv.config()
 const topic = process.env.TOPICO_KAFKA
 const broker = process.env.BROKERS_KAFKA
 const clientId = process.env.CLIENTE_KAFKA
+
 export default class ProducerKafka {
   constructor() {
     const kafka = new Kafka({
@@ -18,7 +19,9 @@ export default class ProducerKafka {
     await this.KafkaProducer.connect()
     await this.KafkaProducer.send({
       topic,
-      messages: [{value: JSON.stringify(mensagem)}],
+      messages: [{
+        value: JSON.stringify(mensagem)
+      }],
     })
     await this.KafkaProducer.disconnect()
   }
