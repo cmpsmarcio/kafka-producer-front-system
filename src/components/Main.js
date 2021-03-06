@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { uuid } from 'uuidv4'
+import uuid from 'react-native-uuid'
 import Form from './Form.js'
 
 export default class Main extends Component {
@@ -22,21 +22,24 @@ export default class Main extends Component {
   render() {
     let drones = []
     for(let i=0; i < this.state.drones; i++) {
-      drones.push(<div className="p-2"><Form 
-        idDrone={uuid()} 
+      drones.push(
+      <Form 
+        idDrone={uuid.v4()} 
         latitude={-23.54982304015043}
         longitude={-46.634168716398555}
         temperature={25}
         humidity={80}
-        rastreability={false} />
-        </div>)
+        rastreability={false} 
+      />)
     }
     return (
       <div>
-        <div> 
+        <div>
           <button className="left-2 top-2 fixed mr-5 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg" onClick={this.handleClick}>Novo drone</button>
         </div>
-        <div className="flex flex-rowrap">{drones}</div>
+        <div className="flex flex-rowrap space-x-2">
+          {drones}
+        </div>
       </div>
     )
   }

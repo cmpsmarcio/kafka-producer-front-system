@@ -8,7 +8,7 @@ export default function Home() {
       <Head>
         <title>Trabalho final - 38SCJ</title>
       </Head>
-      <main className={styles.main}>
+      <main className={styles.main} > 
         <Main />
       </main>
       <footer className={styles.footer}>

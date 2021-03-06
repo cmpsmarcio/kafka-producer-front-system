@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 export default class Form extends Component {
   constructor(props) {
     super(props);
@@ -9,9 +9,17 @@ export default class Form extends Component {
       temperature: props.temperature || 20,
       humidity: props.humidity || 60,
       rastreability: false,
-    };
-
+    }
+    
     this.handleChanged = this.handleChanged.bind(this);
+  }
+
+  sendKafka(value) {
+   fetch('http://localhost:3000/api/kafka ', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(value)
+    }).then(data => data.json())
   }
 
   keyCancel(event) {
@@ -23,17 +31,18 @@ export default class Form extends Component {
       ...this.state,
       [event.target.id]: event.target.value,
     });
+
     clearInterval(this.interval);
     this.interval = setInterval(() => {
-      console.log(this.state);
+      this.sendKafka(this.state)
     }, 10000);
   }
 
   render() {
     return (
-      <div className="flex flex-rowrap bg-gray-100 m-auto my-10 shadow-md">
-        <div className="py-8 px-8 rounded-xl">
-          <h1 className="font-bold text-gray-700 text-xl sm:text-2xl md:text-5xl leading-tight mb-2">
+      <div className="flex flex-rowrap bg-gray-100 m-auto my-10 shadow-md w-72">
+        <div className="py-2 px-2 rounded-xl w-full">
+          <h1 className="font-bold text-gray-700 text-3xl sm:text-xl md:text-3xl leading-tight mb-2">
             Drone
           </h1>
           <div className="mb-4">
@@ -43,7 +52,7 @@ export default class Form extends Component {
               Código do Drone
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none text-xs border rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               name="drone"
               id="idDrone"
               type="text"
