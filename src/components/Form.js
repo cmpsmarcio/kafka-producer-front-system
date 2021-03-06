@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import moment from 'moment'
 export default class Form extends Component {
   constructor(props) {
     super(props);
@@ -23,15 +22,17 @@ export default class Form extends Component {
     }, 10000);
   }
 
-  sendKafka({idDrone, temperature, humidity}) {
+  sendKafka(message) {
    fetch('http://localhost:3000/api/kafka ', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        date: moment().format(),
-        idDrone,
-        temperature,
-        humidity
+        droneId: message.idDrone,
+        latitude: message.latitude,
+        longitude: message.longitude,
+        temperatureCelsius: message.temperature,
+        moisturePercentage: message.humidity,
+        isTraceble: message.rastreability
       })
     }).then(data => data.json())
   }
@@ -109,9 +110,12 @@ export default class Form extends Component {
           <div className="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
             <input
               type="checkbox"
+              className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" 
               name="toggle"
-              id="toggle"
-              className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" />
+              id="rastreability"
+              onChange={this.handleChanged}
+              value={this.state.rastreability}
+               />
             <label
               htmlFor="toggle"
               className="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" >
