@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+
 export default class Form extends Component {
   constructor(props) {
     super(props);
@@ -15,11 +16,18 @@ export default class Form extends Component {
     this.monitoring()
   }
 
+  validaLatitude = state => state.latitude >= -90 && state.latitude <= 90
+
+  validaLongitude = state => state.longitude >= -180 && state.longitude <= 180
+    
   monitoring() {
     clearInterval(this.interval);
-    this.interval = setInterval(() => {
-      this.sendKafka(this.state)
-    }, 10000);
+
+    if (this.validaLatitude(this.state) && this.validaLongitude(this.state)) {
+      this.interval = setInterval(() => {
+        this.sendKafka(this.state)
+      }, 10000)
+    }
   }
 
   sendKafka(message) {
@@ -136,6 +144,9 @@ export default class Form extends Component {
               onChange={this.handleChanged}
               value={this.state.latitude}
               required />
+              {
+                !this.validaLatitude(this.state) && <p className="text-red-800 text-sm">Latitude deve estar entre -90 e 90.<br/>Drone não será monitorado!</p>
+              }
           </div>
           <div className="mb-4">
             <label
@@ -150,8 +161,11 @@ export default class Form extends Component {
               type="text"
               placeholder="Insira a longitude"
               onChange={this.handleChanged}
-              value={this.state.longitude}
+              value={this.state.longitude}              
               required />
+              {
+                !this.validaLongitude(this.state) && <p className="text-red-800 text-sm">Longitude deve estar entre -180 e 180.<br/>Drone não será monitorado!</p>
+              }
           </div>
         </div>
       </div>
