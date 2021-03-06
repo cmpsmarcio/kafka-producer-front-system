@@ -1,34 +1,79 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Simulação de mapeamento de um Drone
 
-## Getting Started
+## Descrição
+<p>
+Coleta os dados de temperatura e umidade que são capturadas por drones.
+</p>
 
-First, run the development server:
+## Iniciando
+<p>Você precisará ter o Node, Docker e o docker-compose instalados. Seguem os links abaixo caso precise:</p>
+
+- [Nodejs](https://nodejs.org/en/download/)
+- [docker](https://docs.docker.com/engine/install/)
+- [docker-compose](https://docs.docker.com/compose/install/)
+
+
+<p>1º passo - Faça um clone do projeto</p>
+<p>2º passo - Na pasta do projeto, rode o comando descrito abaixo para criação dos containers do Kafka e Zookeeper</p>
 
 ```bash
-npm run dev
-# or
-yarn dev
+~ docker-compose up -d
+```
+<p>Rode o comando <i>docker ps</i> ou <i>docker container ls</i> para ver se os containers estão ativos</p>
+
+```bash
+~ docker container ls
+CONTAINER ID   IMAGE                              COMMAND                  CREATED       STATUS       PORTS                          NAMES
+ce33427b578f   confluentinc/cp-kafka:latest       "/etc/confluent/dock…"   4 hours ago   Up 4 hours   0.0.0.0:9092->9092/tcp         kafka-producer-front-system_kafka_1
+75b82db8bb3f   confluentinc/cp-zookeeper:latest   "/etc/confluent/dock…"   4 hours ago   Up 4 hours   2181/tcp, 2888/tcp, 3888/tcp   kafka-producer-front-system_zookeeper_1
+```
+<p>3º passo - Rode o comando abaixo para criar o tópico do Kafka para qual as mensagens serão enviadas</p>
+
+```bash
+~ docker-compose exec kafka kafka-topics --create --topic mapeamento-drone --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181 
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<p>4º passo - Rode o comando abaixo para que o Node instale as dependencias do projeto</p>
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```bash
+~ npm install
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+<p>5º passo - Para buildar o projeto, rode o comando abaixo</p>
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+~ npm run build
+```
 
-## Learn More
+<p>6º passo - Por fim, rode o comando abaixo para rodar a aplicação</p>
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+~ npm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<p>Uma indicação sobre a url e a porta ira aparecer, copie a url e cole no navergador para abrir a aplicação</p>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+~ ready - started server on 0.0.0.0:3000, url: http://localhost:3000
+```
 
-## Deploy on Vercel
+<h1 align="center">
+  <img alt="Aplicação rodando" title="#Aplicação rodando" src="./assets/appstart.png" />
+</h1>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<p>Clique no botão "Novo Drone" para iniciar a captura das informações</p>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<h1 align="center">
+  <img alt="Mapeamento do drone" title="#Drone" src="./assets/appdrone.png" />
+</h1>
+
+<p>Clique novamente no botão para adicionar mais um drone</p>
+
+<h1 align="center">
+  <img alt="Mapeamento do drone" title="#Drone" src="./assets/appdrone2.png" />
+</h1>
+
+#
+
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
