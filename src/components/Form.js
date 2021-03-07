@@ -52,7 +52,7 @@ export default class Form extends Component {
   handleChanged(event) {
     this.setState({
       ...this.state,
-      [event.target.id]: event.target.value,
+      [event.target.id]: event.target.id == "rastreability" ? event.target.checked : event.target.value,
     });
     this.monitoring()
   }
